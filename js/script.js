@@ -4,23 +4,34 @@ FSJS Project 2 - Data Pagination and Filtering
 */
 
 
-
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-
-
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
 const studentList = document.querySelector(".student-list");
 const linkList = document.querySelector(".link-list");
+const header = document.querySelector("header");
+
+let label = document.createElement("label");
+header.appendChild(label);
+label.for = "search";
+label.className = "student-search";
+let span = document.createElement("span");
+label.appendChild(span);
+span.textContent = "Search by name";
+let input = document.createElement("input");
+label.appendChild(input);
+input.id = "search";
+input.placeholder = "Search by name...";
+let button = document.createElement("button");
+label.appendChild(button);
+button.type = "button";
+let img = document.createElement("img");
+button.appendChild(img);
+img.src = "img/icn-search.svg";
+img.alt = "Search icon";
 
 
+
+
+// showPage function that requires a list (array of data) and page number; 
+//it then displays 9 objects from that list on the requested page number.
 function showPage(list, page) {
    let startIndex = (page * 9) - 9;
    let endIndex = (page * 9);
@@ -45,11 +56,9 @@ function showPage(list, page) {
    }
 };
 
-/*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
-*/
 
+// addPagination function takes a provided list (array of objects) and creates buttons 
+//at the bottom of the page with page numbers required to show full list with 9 objects per page
 function addPagination(list) {
    let numOfPages = Math.ceil(list.length / 9);
    linkList.innerHTML = "";
@@ -64,6 +73,7 @@ function addPagination(list) {
    document.querySelector("button").className = "active";
 };
 
+// EventListener looks for a click on one of the page buttons and selects that "page" to display using the showPage function
 linkList.addEventListener("click", (e) => {
    if (e.target.tagName === "BUTTON") {
       document.querySelector(".active").className = "";
@@ -72,8 +82,6 @@ linkList.addEventListener("click", (e) => {
    }
 });
 
+
 showPage(data, 1);
 addPagination(data);
-
-
-// Call functions
