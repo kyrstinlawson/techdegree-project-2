@@ -8,27 +8,31 @@ const studentList = document.querySelector(".student-list");
 const linkList = document.querySelector(".link-list");
 const header = document.querySelector("header");
 
-let label = document.createElement("label");
+function createElement(elementName, property, value) {
+   const element = document.createElement(elementName);
+   element[property] = value;
+   return element;
+};
+
+// creates search bar 
+let label = createElement("label", "for", "search");
 header.appendChild(label);
-label.for = "search";
 label.className = "student-search";
-let span = document.createElement("span");
+let span = createElement("span", "textContent", "Search by name");
 label.appendChild(span);
-span.textContent = "Search by name";
-let input = document.createElement("input");
+let input = createElement("input", "id", "search");
 label.appendChild(input);
-input.id = "search";
 input.placeholder = "Search by name...";
-let button = document.createElement("button");
+let button = createElement("button", "type", "button");
 label.appendChild(button);
-button.type = "button";
-let img = document.createElement("img");
+let img = createElement("img", "src", "img/icn-search.svg");
 button.appendChild(img);
-img.src = "img/icn-search.svg";
 img.alt = "Search icon";
 
-
-
+// logs the value that is inputted into search bar as it changes
+input.addEventListener("input", (e) => {
+   console.log(e.target.value);
+});
 
 // showPage function that requires a list (array of data) and page number; 
 //it then displays 9 objects from that list on the requested page number.
@@ -85,3 +89,4 @@ linkList.addEventListener("click", (e) => {
 
 showPage(data, 1);
 addPagination(data);
+
