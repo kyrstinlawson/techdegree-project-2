@@ -8,6 +8,7 @@ const studentList = document.querySelector(".student-list");
 const linkList = document.querySelector(".link-list");
 const header = document.querySelector("header");
 
+
 function createElement(elementName, property, value) {
    const element = document.createElement(elementName);
    element[property] = value;
@@ -29,10 +30,6 @@ let img = createElement("img", "src", "img/icn-search.svg");
 button.appendChild(img);
 img.alt = "Search icon";
 
-// logs the value that is inputted into search bar as it changes
-input.addEventListener("input", (e) => {
-   console.log(e.target.value);
-});
 
 // showPage function that requires a list (array of data) and page number; 
 //it then displays 9 objects from that list on the requested page number.
@@ -55,8 +52,7 @@ function showPage(list, page) {
             </li>
             `;
             studentList.insertAdjacentHTML("beforeend", studentItem);
-      } 
-      
+      }       
    }
 };
 
@@ -89,4 +85,32 @@ linkList.addEventListener("click", (e) => {
 
 showPage(data, 1);
 addPagination(data);
+
+const search = document.querySelector("#search");
+const searchButton = document.querySelector("button");
+
+function searchList(searchInput, list) {
+   const searchMatch = [];
+   for (let i = 0; i < list.length; i++) {
+      if (searchInput.value.length !== 0 && 
+         (list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) 
+         || list[i].name.last.toLowerCase().includes(searchInput.value.toLowerCase()))) {
+         searchMatch.push(list[i]);
+         console.log(searchMatch);
+         showPage(searchMatch, 1);
+         addPagination(searchMatch);
+      } 
+   }
+};
+
+searchButton.addEventListener("submit", (e) => {
+   e.preventDefault();
+   searchList(search, data);
+   console.log("submit button works! ");
+});
+
+search.addEventListener("keyup", () => {
+   searchList(search, data);
+   console.log("search is functional");
+});
 
