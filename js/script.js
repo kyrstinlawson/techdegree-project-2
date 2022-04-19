@@ -89,6 +89,7 @@ addPagination(data);
 const search = document.querySelector("#search");
 const searchButton = document.querySelector("button");
 
+// Searches the first and last names of provided list and compares to search input and only shows the matches
 function searchList(searchInput, list) {
    const searchMatch = [];
    for (let i = 0; i < list.length; i++) {
@@ -96,21 +97,22 @@ function searchList(searchInput, list) {
          (list[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) 
          || list[i].name.last.toLowerCase().includes(searchInput.value.toLowerCase()))) {
          searchMatch.push(list[i]);
-         console.log(searchMatch);
+         console.log(list[i].name);
          showPage(searchMatch, 1);
          addPagination(searchMatch);
-      } 
+      } else if (searchMatch.length === 0 && searchInput.value.length !== 0) {
+         studentList.innerHTML = `<p> No results found </p>`;
+         linkList.innerHTML = "";
+      }
    }
 };
 
 searchButton.addEventListener("submit", (e) => {
    e.preventDefault();
    searchList(search, data);
-   console.log("submit button works! ");
 });
 
 search.addEventListener("keyup", () => {
    searchList(search, data);
-   console.log("search is functional");
 });
 
