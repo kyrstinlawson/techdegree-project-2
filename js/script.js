@@ -14,21 +14,6 @@ function createElement(elementName, property, value) {
    return element;
 };
 
-// creates search bar 
-let label = createElement("label", "for", "search");
-header.appendChild(label);
-label.className = "student-search";
-let span = createElement("span", "textContent", "Search by name");
-label.appendChild(span);
-let input = createElement("input", "id", "search");
-label.appendChild(input);
-input.placeholder = "Search by name...";
-let button = createElement("button", "type", "button");
-label.appendChild(button);
-let img = createElement("img", "src", "img/icn-search.svg");
-button.appendChild(img);
-img.alt = "Search icon";
-
 
 // showPage function that requires a list (array of data) and page number; 
 // it then displays 9 objects from that list on the requested page number.
@@ -69,8 +54,8 @@ function addPagination(list) {
       </li>
       `;
       linkList.insertAdjacentHTML("beforeend", button);
+      document.querySelector("button").className = "active";
    }
-   document.querySelector("button").className = "active";
    linkList.addEventListener("click", (e) => {
       if (e.target.tagName === "BUTTON") {
          document.querySelector(".active").className = "";
@@ -82,6 +67,21 @@ function addPagination(list) {
 
 showPage(data, 1);
 addPagination(data);
+
+// creates search bar 
+let label = createElement("label", "for", "search");
+header.appendChild(label);
+label.className = "student-search";
+let span = createElement("span", "textContent", "Search by name");
+label.appendChild(span);
+let input = createElement("input", "id", "search");
+label.appendChild(input);
+input.placeholder = "Search by name...";
+let button = createElement("button", "type", "button");
+label.appendChild(button);
+let img = createElement("img", "src", "img/icn-search.svg");
+button.appendChild(img);
+img.alt = "Search icon";
 
 const search = document.querySelector("#search");
 const searchButton = document.querySelector("button");
@@ -100,6 +100,9 @@ function searchList(searchInput, list) {
       } else if (searchMatch.length === 0 && searchInput.value.length !== 0) {
          studentList.innerHTML = `<p> No results found </p>`;
          linkList.innerHTML = "";
+      } else if (searchInput.value.length === 0) {
+         showPage(data, 1);
+         addPagination(data);
       }
    }
 };
