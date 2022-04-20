@@ -3,7 +3,6 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-
 const studentList = document.querySelector(".student-list");
 const linkList = document.querySelector(".link-list");
 const header = document.querySelector("header");
@@ -32,7 +31,7 @@ img.alt = "Search icon";
 
 
 // showPage function that requires a list (array of data) and page number; 
-//it then displays 9 objects from that list on the requested page number.
+// it then displays 9 objects from that list on the requested page number.
 function showPage(list, page) {
    let startIndex = (page * 9) - 9;
    let endIndex = (page * 9);
@@ -58,7 +57,8 @@ function showPage(list, page) {
 
 
 // addPagination function takes a provided list (array of objects) and creates buttons 
-//at the bottom of the page with page numbers required to show full list with 9 objects per page
+// at the bottom of the page with page numbers required to show full list with 9 objects per page
+// then calls the showPage function based on the button/page number clicked
 function addPagination(list) {
    let numOfPages = Math.ceil(list.length / 9);
    linkList.innerHTML = "";
@@ -71,17 +71,14 @@ function addPagination(list) {
       linkList.insertAdjacentHTML("beforeend", button);
    }
    document.querySelector("button").className = "active";
+   linkList.addEventListener("click", (e) => {
+      if (e.target.tagName === "BUTTON") {
+         document.querySelector(".active").className = "";
+         e.target.className = "active";
+         showPage(list, e.target.textContent);
+      }
+   });
 };
-
-// EventListener looks for a click on one of the page buttons and selects that "page" to display using the showPage function
-linkList.addEventListener("click", (e) => {
-   if (e.target.tagName === "BUTTON") {
-      document.querySelector(".active").className = "";
-      e.target.className = "active";
-      showPage(data, e.target.textContent);
-   }
-});
-
 
 showPage(data, 1);
 addPagination(data);
